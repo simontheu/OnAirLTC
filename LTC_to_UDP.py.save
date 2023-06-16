@@ -14,7 +14,7 @@ ticksAtFrameRate = 0;
 ticks = 0;
 goodFrames = 0;
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #IP and UDP
-previousTimeStamp = 0;
+
 LTCDevice = hid.Device(0x1dd2, 0x1033)
 #LTCDevice.open(0x1dd2,0x1033)
 #LTCDevice.set_nonblocking(True)
@@ -36,25 +36,19 @@ while True:
 	if (frames >= frameRate):
 		frameRate = frames + 1
 	if (hours > 23 or mins > 59 or seconds > 59):
-		timeStamp = tcBytes[1] * 255 + tcBytes[0]
-		if previousTimeStamp > timeStamp:
-			diff = (65535 - previousTimeStamp) + timeStamp
-		else:	
-			diff = timeStamp - previousTimeStamp
-		previousTimeStamp = timeStamp
-		print ("invalid time")
+		print ("invalid time", tcBytes)
 
 	if (frames == frameRate):
 		ticksAtFrameRate += 1
 
 	if (hours != lastHours and ((hours != (lastHours + 1) % 24) and mins != 0)):
-		print ("invalid time hours")
+		#print ("invalid time hours")
 		invalid = 1
 	if (mins != lastMins and ((hours != (lastMins + 1) % 60) and seconds != 0)):
-		print ("invalid time mins")
+		#print ("invalid time mins")
 		invalid = 1
 	if (seconds != lastSeconds and ((seconds != (lastSeconds + 1) % 60) and frames != 0)):
-		print ("invalid time seconds")
+		#print ("invalid time seconds")
 		invalid = 1
 
 
@@ -65,10 +59,9 @@ while True:
 	if (invalid != 1):
 		#Send Time Out
 		goodFrames += 1
-		txt = "LTC_TIME:{:02d}:{:02d}:{:02d}:{:02d} {:d}"
-		txt = txt.format(hours, mins, seconds, frames, goodFrames)
-		if seconds == 0 and frames == 0:
-			print(txt)
+		#txt = "LTC_TIME:{:02d}:{:02d}:{:02d}:{:02d}"
+		#txt = txt.format(hours, mins, seconds, frames)
+		#print(txt)
 		#sock.sendto(txt.encode('utf-8'), (UDP_IP, UDP_PORT))
 	else:
 		print ("Good frames in a row: ", goodFrames)

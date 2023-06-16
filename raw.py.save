@@ -1,0 +1,18 @@
+#import hid
+import time
+import socket
+
+LTCDevice = hid.Device(0x1dd2, 0x1033)
+
+while True:
+	invalid = 0
+	try:
+		tcBytes =  LTCDevice.read(64)
+#		tcBytes =  (hid.Device(1452,545).read(64))
+	except:
+		print(hid.enumerate())
+		print("Device Unavailable")
+		break
+	txt = "{:08b} {:08b} {:08b} {:08b} {:08b} {:08b} {:08b} {:08b} {:08b} {:08b}"
+	txt = txt.format(tcBytes[0], tcBytes[1], tcBytes[2],tcBytes[3],tcBytes[4],tcBytes[5],tcBytes[6],tcBytes[7],tcBytes[8],tcBytes[9])
+	print(txt)
