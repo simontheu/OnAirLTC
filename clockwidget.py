@@ -142,7 +142,7 @@ class ClockWidget(QtWidgets.QWidget):
         # sync local timer with system clock
         while QtCore.QTime.currentTime().msec() > 5:
             pytime.sleep(0.001)
-        self.timer.start(50)
+        self.timer.start(50) # Reduced this from 500
 
     def update_time(self):
         self.timeChanged.emit(QtCore.QTime.currentTime())
@@ -268,7 +268,6 @@ class ClockWidget(QtWidgets.QWidget):
 
     def paintEvent(self, event):
         side = min(self.width(), self.height())
-
 
         if (self.ltc_time) == True:
             self.time = QtCore.QTime(self.LTCh,self.LTCm,self.LTCs)    

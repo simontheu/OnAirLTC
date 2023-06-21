@@ -17,8 +17,8 @@ ticks = 0;
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #IP and UDP
 
-#serialDevice = serial.Serial('/dev/ttyACM0', timeout=10)
-serialDevice = serial.Serial('/dev/tty.usbmodem11101', timeout=10)
+serialDevice = serial.Serial('/dev/ttyACM0', timeout=10)
+#serialDevice = serial.Serial('/dev/tty.usbmodem11101', timeout=10)
 
 print (serialDevice.name)
 
