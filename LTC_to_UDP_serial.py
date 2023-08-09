@@ -71,12 +71,12 @@ def decodeTC(hours, mins, seconds, frames, FPS):
 	lastMins = mins
 	lastSeconds = seconds
 
-	if (invalid != 1) and frames == 0: #Send only seconds
+	if (invalid != 1): #Send all
 		lastSeconds = seconds
 		#Send Time Out
 		txt = "LTC_TIME:{:02d}:{:02d}:{:02d}:{:02d}"
 		txt = txt.format(hours, mins, seconds, frames)
-		print(txt, goodFrames)
+		print(txt + " Consecutive RX'd Frames" +  goodFrames)
 		sock.sendto(txt.encode('utf-8'), (UDP_IP, UDP_PORT))
 
 	if (invalid != 1):
