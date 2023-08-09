@@ -11,7 +11,7 @@ lastHours = 0;
 lastMins = 0;
 lastSeconds = 0;
 lastFrames = 0;
-frameRate = 10;#Stops a div by zero error
+frameRate = 0;#Stops a div by zero error
 ticksAtFrameRate = 0;
 ticks = 0;
 firstRun = 1;
@@ -44,9 +44,10 @@ def decodeTC(hours, mins, seconds, frames, FPS):
 	global goodFrames
 	global firstRun
 	invalid = 0
+	if (frames >= frameRate):
+		frameRate = frames + 1
+
 	if firstRun != 1:
-		if (frames >= frameRate):
-			frameRate = frames + 1
 		if (hours > 23 or mins > 59 or seconds > 59):
 			print ("invalid time")		
 
@@ -76,12 +77,12 @@ def decodeTC(hours, mins, seconds, frames, FPS):
 		#Send Time Out
 		txt = "LTC_TIME:{:02d}:{:02d}:{:02d}:{:02d}"
 		txt = txt.format(hours, mins, seconds, frames)
-		print(txt + " Consecutive RX'd Frames" +  goodFrames)
+		print(txt , " Consecutive RX'd Frames" ,  goodFrames)
 		sock.sendto(txt.encode('utf-8'), (UDP_IP, UDP_PORT))
 
 	if (invalid != 1):
 		goodFrames += 1
-	time.sleep((1/frameRate)/2)
+	time.sleep((1/(frameRate))/2)
 	firstrun = 0
 
 
