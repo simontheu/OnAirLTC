@@ -71,11 +71,7 @@ def decodeTC(hours, mins, seconds, frames, FPS):
 	lastMins = mins
 	lastSeconds = seconds
 
-<<<<<<< Updated upstream
-	if (invalid != 1): 
-=======
 	if (invalid != 1) and frames == 0: #Send only seconds
->>>>>>> Stashed changes
 		lastSeconds = seconds
 		#Send Time Out
 		txt = "LTC_TIME:{:02d}:{:02d}:{:02d}:{:02d}"
