@@ -14,7 +14,6 @@ lastFrames = 0;
 frameRate = 0;#Stops a div by zero error
 ticksAtFrameRate = 0;
 ticks = 0;
-firstRun = 1;
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #IP and UDP
 
@@ -42,30 +41,29 @@ def decodeTC(hours, mins, seconds, frames, FPS):
 	global lastSeconds
 	global lastHours
 	global goodFrames
-	global firstRun
+
 	invalid = 0
 	if (frames >= frameRate):
 		frameRate = frames + 1
 
-	if firstRun != 1:
-		if (hours > 23 or mins > 59 or seconds > 59):
-			print ("invalid time")		
+	if (hours > 23 or mins > 59 or seconds > 59):
+		print ("invalid time")		
 
-		if (frames == frameRate):
-			ticksAtFrameRate += 1
+	if (frames == frameRate):
+		ticksAtFrameRate += 1
 
-		if (hours != lastHours and ((hours != (lastHours + 1) % 24) and mins != 0)):
-			print ("invalid time hours")
-			invalid = 1
-			goodFrames  = 0
-		if (mins != lastMins and ((hours != (lastMins + 1) % 60) and seconds != 0)):
-			print ("invalid time mins")
-			invalid = 1
-			goodFrames = 0
-		if (seconds != lastSeconds and ((seconds != (lastSeconds + 1) % 60) and frames != 0)):
-			print ("invalid time seconds", seconds)
-			invalid = 1
-			goodFrame = 0
+	if (hours != lastHours and ((hours != (lastHours + 1) % 24) and mins != 0)):
+		print ("invalid time hours")
+		invalid = 1
+		goodFrames  = 0
+	if (mins != lastMins and ((hours != (lastMins + 1) % 60) and seconds != 0)):
+		print ("invalid time mins")
+		invalid = 1
+		goodFrames = 0
+	if (seconds != lastSeconds and ((seconds != (lastSeconds + 1) % 60) and frames != 0)):
+		print ("invalid time seconds", seconds)
+		invalid = 1
+		goodFrame = 0
 
 
 	lastHours = hours
@@ -83,7 +81,6 @@ def decodeTC(hours, mins, seconds, frames, FPS):
 	if (invalid != 1):
 		goodFrames += 1
 	time.sleep((1/(frameRate))/2)
-	firstrun = 0
 
 
 
